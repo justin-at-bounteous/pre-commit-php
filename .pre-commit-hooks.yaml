@@ -59,21 +59,21 @@
   name: PHP Ensure no dumps
   descriptions: Checks for a call to symfony's dump
   entry: \s+dump\(|;dump\(|^dump\(
-  language: pcre
+  language: pygrep
   files: \.php$
 
 - id: php-no-var_dumps
   name: PHP Ensure no var_dumps
   descriptions: Checks for var_dump calls
   entry: \s+var_dump\(|;var_dump\(|^var_dump\(
-  language: pcre
+  language: pygrep
   files: \.php$
 
 - id: php-no-exits
   name: PHP Ensure no exits or dies
   descriptions: Checks for die and exit calls
   entry: \s+exit[;(]|;exit[;(]|^exit[;(]|\s+die[;(]|;die[;(]|^die[;(]
-  language: pcre
+  language: pygrep
   files: \.php$
 
 - id: buildnumbers
