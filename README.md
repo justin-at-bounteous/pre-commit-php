@@ -174,8 +174,7 @@ A bash script that will run the appropriate `phpstan` executable.
 
 ## php-cpd
 ```yaml
-- repo: https://github.com/hlgrrnhrdt/pre-commit-php.git
-  sha: master
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-cpd
     files: \.(php)$
