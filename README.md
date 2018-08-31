@@ -8,15 +8,17 @@ Just add to your `.pre-commit-config.yaml` file with the following
 
 ```yaml
 - repo: git@github.com:justin-at-demac/pre-commit-php.git
+  rev: master
   hooks:
   - id: php-lint
   - id: php-unit
   - id: php-cs
     files: \.(php)$
-    args: [--standard=PSR1 -p]
-  - id: php-cbf
-    files: \.(php)$
-    args: [--standard=PSR1 -p]
+    args: ["--standard=PSR2,EcgM2", "--severity=10", "--extensions=php,phtml", "-p"]
+  - id: php-md
+  - id: php-no-dumps
+  - id: php-no-var_dumps
+  - id: php-no-exits
   - id: php-stan
     files: \.(php)$
     args: ["--configuration=phpstan.neon --level=5"]
@@ -167,3 +169,16 @@ The tool will fail a build when it has found issues that violate the configured 
     args: ["--configuration=phpstan.neon --level=5"]
  ```
 A bash script that will run the appropriate `phpstan` executable.
+
+## php-cpd
+```yaml
+- repo: https://github.com/hlgrrnhrdt/pre-commit-php.git
+  sha: master
+  hooks:
+  - id: php-cpd
+    files: \.(php)$
+    args: ["--min-tokens=10"]
+```
+A bash script that will run the appropriate [PHP Copy Paste Detector](https://github.com/sebastianbergmann/phpcpd) executable and report on duplicate code.
+
+The tool will fail a build when it has found issues that violate the configured code rules. This will accept all arguments, in particular you'll want to tune for `----min-lines=`, `--min-tokens=`, and `--fuzzy`.
