@@ -17,7 +17,7 @@ Just add to your `.pre-commit-config.yaml` file with the following
   - id: php-cbf
     files: \.(php)$
     args: [--standard=PSR1 -p]
-  - id: phpstan
+  - id: php-stan
     files: \.(php)$
     args: ["--configuration=phpstan.neon --level=5"]
 ```
@@ -156,13 +156,13 @@ A bash script that will run the appropriate [PHP Mess Detector](http://phpmd.org
 
 The tool will fail a build when it has found issues that violate the configured code rules. Please note that the code rule list must be the first argument in the `args` list.
 
-## phpstan (PHP7 only)
+## php-stan (PHP7 only)
 
 [PHPStan](https://github.com/phpstan/phpstan) focuses on finding errors in your code without actually running it. It catches whole classes of bugs even before you write tests for the code.
 ```yaml
 - repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
-  - id: phpstan
+  - id: php-stan
     files: \.(php)$
     args: ["--configuration=phpstan.neon --level=5"]
  ```
