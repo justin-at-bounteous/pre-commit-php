@@ -16,6 +16,8 @@ Just add to your `.pre-commit-config.yaml` file with the following
     files: \.(php)$
     args: ["--standard=PSR2,EcgM2", "--severity=10", "--extensions=php,phtml", "-p"]
   - id: php-md
+    files: \.(php)$
+    args: ["codesize,controversial,design,naming,unusedcode"]
   - id: php-no-dumps
   - id: php-no-var_dumps
   - id: php-no-exits
