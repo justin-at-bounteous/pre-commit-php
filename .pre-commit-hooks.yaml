@@ -88,3 +88,10 @@
   entry: pre_commit_hooks/php-codecept.sh
   language: script
   files: \.php$
+
+- id: phpstan
+  name: PHP Static Analysis Tool
+  description: Run PHP static analysis against all staged files. Requires PHP7
+  entry: pre_commit_hooks/phpstan.sh
+  language: script
+  files: \.php$

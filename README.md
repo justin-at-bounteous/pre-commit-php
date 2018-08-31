@@ -1,14 +1,13 @@
 # PHP Pre-commit Hooks
 
-Pre-commit scripts appropiate for *any* PHP project. These hooks are made as custom plugins under the [pre-commit](http://pre-commit.com/#new-hooks) git hook framework.
+Pre-commit scripts appropriate for PHP project. These hooks are made as custom plugins under the [pre-commit](http://pre-commit.com/#new-hooks) git hook framework.
 
 # Setup
 
 Just add to your `.pre-commit-config.yaml` file with the following
 
 ```yaml
-- repo: git@github.com:borisbabic/pre-commit-php.git
-  sha: 2.0.0
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-lint
   - id: php-unit
@@ -18,6 +17,9 @@ Just add to your `.pre-commit-config.yaml` file with the following
   - id: php-cbf
     files: \.(php)$
     args: [--standard=PSR1 -p]
+  - id: phpstan
+    files: \.(php)$
+    args: ["--configuration=phpstan.neon --level=5"]
 ```
 
 # Supported Hooks
@@ -25,9 +27,7 @@ Just add to your `.pre-commit-config.yaml` file with the following
 ## php-lint
 
 ```yaml
-<<<<<<< HEAD
-- repo: git@github.com:borisbabic/pre-commit-php.git
-  sha: 2.0.0
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-lint
 ```
@@ -37,8 +37,7 @@ A bash script that runs `php -l` against stage files that are php. Assumes `php`
 ## php-lint-all
 
 ```yaml
-- repo: git@github.com:borisbabic/pre-commit-php.git
-  sha: 2.0.0
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-lint-all
 ```
@@ -47,10 +46,8 @@ A systems hook that just runs `php -l` against stage files that have the `.php` 
 
 ## php-unit
 
-
 ```yaml
-- repo: git@github.com:borisbabic/pre-commit-php.git
-  sha: 2.0.0
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-unit
 ```
@@ -64,8 +61,7 @@ Note in its current state, it will run the whole PHPUnit test as along as `.php`
 ## php-cs
 
 ```yaml
-- repo: git@github.com:borisbabic/pre-commit-php.git
-  sha: 2.0.0
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-cs
     files: \.(php)$
@@ -83,8 +79,7 @@ If you have multiple standards or a comma in your `args` property, escape the co
 ## php-cbf
 
 ```yaml
-- repo: git@github.com:borisbabic/pre-commit-php.git
-  sha: 2.0.0
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-cs
     files: \.(php)$
@@ -99,8 +94,7 @@ The `args` property in your hook declaration can be used for pass any valid PHP 
 If you have multiple standards or a comma in your `args` property, escape the comma character like so
 
 ```yaml
-- repo: git@github.com:borisbabic/pre-commit-php.git
-  sha: 2.0.0
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-cs
     files: \.(php)$
@@ -110,9 +104,9 @@ If you have multiple standards or a comma in your `args` property, escape the co
 To install PHP Codesniffer (phpcs & phpcbf), follow the [recommended steps here](https://github.com/squizlabs/PHP_CodeSniffer#installation).
 
 ## php-cs-fixer
+
 ```yaml
-- repo: git@github.com:borisbabic/pre-commit-php.git
-  sha: 2.0.0
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-cs-fixer
     files: \.(php)$
@@ -122,36 +116,54 @@ Similar pattern as the php-cs hook. A bash script that will run the appropriate 
 
 The tool will fail a build when it has made changes to the staged files. This allows a developer to do a `git diff` and examine the changes that it has made. Remember that you may omit this if needed with a `SKIP=php-cs-fixer git commit`.
 
-
 ## php-no-dumps
 
 ```yaml
-<<<<<<< HEAD
-- repo: git@github.com:borisbabic/pre-commit-php.git
-  sha: 2.0.0
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-no-dumps
 ```
-A regex that checks that the symfony `dump` debug function isn't commited
+A regex that checks that the symfony `dump` debug function isn't committed
 
 ## php-no-var_dumps
 
 ```yaml
-<<<<<<< HEAD
-- repo: git@github.com:borisbabic/pre-commit-php.git
-  sha: 2.0.0
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-no-var_dumps
 ```
-A regex that checks that `var_dump` isn't commited
+A regex that checks that `var_dump` isn't committed
 
 ## php-no-exits
 
 ```yaml
-<<<<<<< HEAD
-- repo: git@github.com:borisbabic/pre-commit-php.git
-  sha: 2.0.0
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
   hooks:
   - id: php-no-exits
 ```
-A regex that checks that `exit` and `die` aren't commited
+A regex that checks that `exit` and `die` aren't committed
+
+## php-md
+
+```yaml
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
+  hooks:
+  - id: php-md
+    files: \.(php)$
+    args: ["codesize,controversial,design,naming,unusedcode"]
+```
+A bash script that will run the appropriate [PHP Mess Detector](http://phpmd.org/) executable and report issues as configured.
+
+The tool will fail a build when it has found issues that violate the configured code rules. Please note that the code rule list must be the first argument in the `args` list.
+
+## phpstan (PHP7 only)
+
+[PHPStan](https://github.com/phpstan/phpstan) focuses on finding errors in your code without actually running it. It catches whole classes of bugs even before you write tests for the code.
+```yaml
+- repo: git@github.com:justin-at-demac/pre-commit-php.git
+  hooks:
+  - id: phpstan
+    files: \.(php)$
+    args: ["--configuration=phpstan.neon --level=5"]
+ ```
+A bash script that will run the appropriate `phpstan` executable.
