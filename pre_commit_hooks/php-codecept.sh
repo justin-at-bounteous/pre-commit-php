@@ -42,7 +42,7 @@ done;
 
 echo "Running command $exec_command ${args}"
 command_result=`eval "$exec_command ${args}"`
-if [[ $command_result =~ FAILURES ]]
+if [[ $command_result =~ FAILURES || $command_result =~ ERRORS! ]]
 then
     echo "Failures detected in unit tests..."
     echo "$command_result"
